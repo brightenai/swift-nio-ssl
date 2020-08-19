@@ -28,7 +28,7 @@ let package = Package(
     name: "swift-nio-ssl",
     products: [
         .library(name: "NIOSSL",type:.dynamic, targets: ["NIOSSL"]),
-        .library(name: "CNIOBoringSSL",type:.dynamic, targets: ["CNIOBoringSSL"]),
+//        .library(name: "CNIOBoringSSL", targets: ["CNIOBoringSSL"]),
     ],
     dependencies: [
         .package(name:"swift-nio", url: "https://github.com/brightenai/swift-nio.git", .branch("master")),//from: "2.15.0"),
@@ -38,23 +38,15 @@ let package = Package(
                 exclude:[
                     "include/boringssl_prefix_symbols_nasm.inc",
                     "hash.txt"
-                ], // /Users/johnburkey/Projects/Brighten2020/swift-nio-ssl/Sources/CNIOBoringSSL/include/boringssl_prefix_symbols_nasm.inc
-                linkerSettings: [
-                                .unsafeFlags([ "-Xlinker","-soname=CNIOBoringSSL.so"],.when(platforms: [.android])),
-                                 ]
-
+                ]
         ),
-        .target(name: "CNIOBoringSSLShims", dependencies: ["CNIOBoringSSL"],
-                linkerSettings: [
-                                .unsafeFlags([ "-Xlinker","-soname=CNIOBoringSSLShims.so"],.when(platforms: [.android])),
-                                 ]
-),
+        .target(name: "CNIOBoringSSLShims", dependencies: ["CNIOBoringSSL"]),
         .target(name: "NIOSSL",
                 dependencies: [.product(name: "NIO", package: "swift-nio"),
                                .product(name: "NIOConcurrencyHelpers", package: "swift-nio"), "CNIOBoringSSL", "CNIOBoringSSLShims",
                                .product(name: "NIOTLS", package: "swift-nio")],
                 linkerSettings: [
-                                .unsafeFlags([ "-Xlinker","-soname=NIOSSL.so"],.when(platforms: [.android])),
+                                .unsafeFlags([ "-Xlinker","-soname=libNIOSSL.so"],.when(platforms: [.android])),
                                  ]
 
         )
