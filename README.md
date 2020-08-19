@@ -1,4 +1,4 @@
-# SwiftNIO SSL
+# SwiftNIO SSL Android Port
 
 SwiftNIO SSL is a Swift package that contains an implementation of TLS based on BoringSSL. This package allows users of [SwiftNIO](https://github.com/apple/swift-nio) to write protocol clients and servers that use TLS to secure data in flight.
 
