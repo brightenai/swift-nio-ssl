@@ -22,7 +22,7 @@
 // can lift anything missing from there and move it over without change.
 import NIO
 //import Foundation
-//@_implementationOnly
+@_implementationOnly
 import CNIOBoringSSLShims
 
 #if  os(Android)

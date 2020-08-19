@@ -27,8 +27,7 @@ import PackageDescription
 let package = Package(
     name: "swift-nio-ssl",
     products: [
-        .library(name: "NIOSSL",type:.dynamic, targets: ["NIOSSL"]),
-//        .library(name: "CNIOBoringSSL", targets: ["CNIOBoringSSL"]),
+        .library(name: "NIOSSL", targets: ["NIOSSL"]),
     ],
     dependencies: [
         .package(name:"swift-nio", url: "https://github.com/brightenai/swift-nio.git", .branch("master")),//from: "2.15.0"),
