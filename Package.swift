@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 //===----------------------------------------------------------------------===//
 //
 // This source file is part of the SwiftNIO open source project
@@ -27,25 +27,34 @@ import PackageDescription
 let package = Package(
     name: "swift-nio-ssl",
     products: [
-        .library(name: "NIOSSL", targets: ["NIOSSL"]),
-        .executable(name: "NIOTLSServer", targets: ["NIOTLSServer"]),
-        .executable(name: "NIOSSLHTTP1Client", targets: ["NIOSSLHTTP1Client"]),
+        .library(name: "NIOSSL",type:.static, targets: ["NIOSSL"]),
+        .library(name: "CNIOBoringSSL",type:.static, targets: ["CNIOBoringSSL"]),
+//        .executable(name: "NIOTLSServer", targets: ["NIOTLSServer"]),
+//        .executable(name: "NIOSSLHTTP1Client", targets: ["NIOSSLHTTP1Client"]),
 /* This target is used only for symbol mangling. It's added and removed automatically because it emits build warnings. MANGLE_START
         .library(name: "CNIOBoringSSL", type: .static, targets: ["CNIOBoringSSL"]),
 MANGLE_END */
     ],
     dependencies: [
-        .package(url: "https://github.com/brightenai/swift-nio.git", from: "2.15.0"),
+        .package(name:"swift-nio", url: "https://github.com/brightenai/swift-nio.git", .branch("master")),//from: "2.15.0"),
     ],
     targets: [
-        .target(name: "CNIOBoringSSL"),
+        .target(name: "CNIOBoringSSL",
+                exclude:[
+                    "include/boringssl_prefix_symbols_nasm.inc",
+                    "hash.txt"
+                ] // /Users/johnburkey/Projects/Brighten2020/swift-nio-ssl/Sources/CNIOBoringSSL/include/boringssl_prefix_symbols_nasm.inc
+        ),
         .target(name: "CNIOBoringSSLShims", dependencies: ["CNIOBoringSSL"]),
         .target(name: "NIOSSL",
-                dependencies: ["NIO", "NIOConcurrencyHelpers", "CNIOBoringSSL", "CNIOBoringSSLShims", "NIOTLS"]),
-        .target(name: "NIOTLSServer", dependencies: ["NIO", "NIOSSL", "NIOConcurrencyHelpers"]),
-        .target(name: "NIOSSLHTTP1Client", dependencies: ["NIO", "NIOHTTP1", "NIOSSL", "NIOFoundationCompat"]),
-        .target(name: "NIOSSLPerformanceTester", dependencies: ["NIO", "NIOSSL"]),
-        .testTarget(name: "NIOSSLTests", dependencies: ["NIOTLS", "NIOSSL"]),
+                dependencies: [.product(name: "NIO", package: "swift-nio"),
+                               .product(name: "NIOConcurrencyHelpers", package: "swift-nio"), "CNIOBoringSSL", "CNIOBoringSSLShims",
+                               .product(name: "NIOTLS", package: "swift-nio")]
+        )
+//        .target(name: "NIOTLSServer", dependencies: ["NIO", "NIOSSL", "NIOConcurrencyHelpers"]),
+//        .target(name: "NIOSSLHTTP1Client", dependencies: ["NIO", "NIOHTTP1", "NIOSSL", "NIOFoundationCompat"]),
+//        .target(name: "NIOSSLPerformanceTester", dependencies: ["NIO", "NIOSSL"]),
+//        .testTarget(name: "NIOSSLTests", dependencies: ["NIOTLS", "NIOSSL"]),
     ],
     cxxLanguageStandard: .cxx11
 )
