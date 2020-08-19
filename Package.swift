@@ -38,13 +38,25 @@ let package = Package(
                 exclude:[
                     "include/boringssl_prefix_symbols_nasm.inc",
                     "hash.txt"
-                ] // /Users/johnburkey/Projects/Brighten2020/swift-nio-ssl/Sources/CNIOBoringSSL/include/boringssl_prefix_symbols_nasm.inc
+                ], // /Users/johnburkey/Projects/Brighten2020/swift-nio-ssl/Sources/CNIOBoringSSL/include/boringssl_prefix_symbols_nasm.inc
+                linkerSettings: [
+                                .unsafeFlags([ "-Xlinker","-soname=CNIOBoringSSL.so"],.when(platforms: [.android])),
+                                 ]
+
         ),
-        .target(name: "CNIOBoringSSLShims", dependencies: ["CNIOBoringSSL"]),
+        .target(name: "CNIOBoringSSLShims", dependencies: ["CNIOBoringSSL"],
+                linkerSettings: [
+                                .unsafeFlags([ "-Xlinker","-soname=CNIOBoringSSLShims.so"],.when(platforms: [.android])),
+                                 ]
+),
         .target(name: "NIOSSL",
                 dependencies: [.product(name: "NIO", package: "swift-nio"),
                                .product(name: "NIOConcurrencyHelpers", package: "swift-nio"), "CNIOBoringSSL", "CNIOBoringSSLShims",
-                               .product(name: "NIOTLS", package: "swift-nio")]
+                               .product(name: "NIOTLS", package: "swift-nio")],
+                linkerSettings: [
+                                .unsafeFlags([ "-Xlinker","-soname=NIOSSL.so"],.when(platforms: [.android])),
+                                 ]
+
         )
 //        .target(name: "NIOTLSServer", dependencies: ["NIO", "NIOSSL", "NIOConcurrencyHelpers"]),
 //        .target(name: "NIOSSLHTTP1Client", dependencies: ["NIO", "NIOHTTP1", "NIOSSL", "NIOFoundationCompat"]),
