@@ -21,6 +21,14 @@
 // The code is an exact port from SwiftNIO, so if that version ever becomes public we
 // can lift anything missing from there and move it over without change.
 import NIO
+//import Foundation
+//@_implementationOnly
+import CNIOBoringSSLShims
+
+#if  os(Android)
+import CNIOLinux
+import Glibc
+#endif
 
 private let sysFopen: @convention(c) (UnsafePointer<CChar>?, UnsafePointer<CChar>?) -> UnsafeMutablePointer<FILE>? = fopen
 private let sysMlock: @convention(c) (UnsafeRawPointer?, size_t) -> CInt = mlock

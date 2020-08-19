@@ -27,13 +27,8 @@ import PackageDescription
 let package = Package(
     name: "swift-nio-ssl",
     products: [
-        .library(name: "NIOSSL",type:.static, targets: ["NIOSSL"]),
-        .library(name: "CNIOBoringSSL",type:.static, targets: ["CNIOBoringSSL"]),
-//        .executable(name: "NIOTLSServer", targets: ["NIOTLSServer"]),
-//        .executable(name: "NIOSSLHTTP1Client", targets: ["NIOSSLHTTP1Client"]),
-/* This target is used only for symbol mangling. It's added and removed automatically because it emits build warnings. MANGLE_START
-        .library(name: "CNIOBoringSSL", type: .static, targets: ["CNIOBoringSSL"]),
-MANGLE_END */
+        .library(name: "NIOSSL",type:.dynamic, targets: ["NIOSSL"]),
+        .library(name: "CNIOBoringSSL",type:.dynamic, targets: ["CNIOBoringSSL"]),
     ],
     dependencies: [
         .package(name:"swift-nio", url: "https://github.com/brightenai/swift-nio.git", .branch("master")),//from: "2.15.0"),
