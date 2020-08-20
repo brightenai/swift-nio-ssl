@@ -19,6 +19,8 @@ import NIO
 import CNIOBoringSSL
 #endif
 import NIOTLS
+import Logging
+let loggerB = Logger(label: "com.brightenai.ssl.party")
 
 /// The base class for all NIOSSL handlers. This class cannot actually be instantiated by
 /// users directly: instead, users must select which mode they would like their handler to
@@ -214,8 +216,11 @@ public class NIOSSLHandler : ChannelInboundHandler, ChannelOutboundHandler, Remo
     ///
     /// This method must not be called once the connection is established.
     private func doHandshakeStep(context: ChannelHandlerContext) {
+        logger.info("doHandshakeStepA ")
         let result = connection.doHandshake()
         
+        logger.info("doHandshakeStepB \(result)")
+
         switch result {
         case .incomplete:
             state = .handshaking
@@ -235,6 +240,9 @@ public class NIOSSLHandler : ChannelInboundHandler, ChannelOutboundHandler, Remo
 
             // TODO(cory): This event should probably fire out of the BoringSSL info callback.
             let negotiatedProtocol = connection.getAlpnProtocol()
+            
+            logger.info("doHandshakeStepB negotiatedProtocol \(negotiatedProtocol)")
+
             context.fireUserInboundEventTriggered(TLSUserEvent.handshakeCompleted(negotiatedProtocol: negotiatedProtocol))
             
             // We need to unbuffer any pending writes and reads. We will have pending writes if the user attempted to

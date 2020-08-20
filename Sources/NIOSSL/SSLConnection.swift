@@ -18,6 +18,8 @@ import NIO
 #else
 import CNIOBoringSSL
 #endif
+import Logging
+let logger = Logger(label: "com.brightenai.ssl.party")
 
 internal let SSL_MAX_RECORD_SIZE = 16 * 1024
 
@@ -226,12 +228,19 @@ internal final class SSLConnection {
     /// data from internal buffers: call `consumeDataFromNetwork` before calling this
     /// method.
     func doHandshake() -> AsyncOperationResult<CInt> {
+        
+        
+        logger.info("doHandshakeA!")
+
         CNIOBoringSSL_ERR_clear_error()
         let rc = CNIOBoringSSL_SSL_do_handshake(ssl)
         
         if (rc == 1) { return .complete(rc) }
         
         let result = CNIOBoringSSL_SSL_get_error(ssl, rc)
+        
+        logger.info("doHandshakeB \(result)")
+
         let error = BoringSSLError.fromSSLGetErrorResult(result)!
         
         switch error {
