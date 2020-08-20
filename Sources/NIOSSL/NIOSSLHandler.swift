@@ -217,7 +217,7 @@ public class NIOSSLHandler : ChannelInboundHandler, ChannelOutboundHandler, Remo
     /// This method must not be called once the connection is established.
     private func doHandshakeStep(context: ChannelHandlerContext) {
         
-        LoggingSystem.bootstrap(StreamLogHandler.standardError)
+       // LoggingSystem.bootstrap(StreamLogHandler.standardError)
 
         logger.info("doHandshakeStepA ")
         let result = connection.doHandshake()
