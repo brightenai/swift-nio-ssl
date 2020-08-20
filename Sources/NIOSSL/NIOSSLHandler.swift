@@ -18,7 +18,6 @@ import NIO
 #else
 import CNIOBoringSSL
 #endif
-import Foundation
 import NIOTLS
 
 /// The base class for all NIOSSL handlers. This class cannot actually be instantiated by
@@ -215,12 +214,8 @@ public class NIOSSLHandler : ChannelInboundHandler, ChannelOutboundHandler, Remo
     ///
     /// This method must not be called once the connection is established.
     private func doHandshakeStep(context: ChannelHandlerContext) {
-        NSLog("doHandshakeStep \(context)")
-
         let result = connection.doHandshake()
         
-        NSLog("doHandshakeStepB \(result)")
-
         switch result {
         case .incomplete:
             state = .handshaking
