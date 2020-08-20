@@ -301,6 +301,9 @@ static bool ssl_crypto_x509_session_cache_objects(SSL_SESSION *sess) {
 
   bssl::UniquePtr<X509> leaf;
   for (CRYPTO_BUFFER *cert : sess->certs.get()) {
+      
+      fprintf(stderr, "SSL X509 cert %lx\n", cert);
+      
     UniquePtr<X509> x509(X509_parse_from_buffer(cert));
     if (!x509) {
       OPENSSL_PUT_ERROR(SSL, SSL_R_DECODE_ERROR);
