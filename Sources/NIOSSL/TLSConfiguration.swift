@@ -225,10 +225,6 @@ public struct TLSConfiguration {
                  shutdownTimeout: TimeAmount,
                  keyLogCallback: NIOSSLKeyLogCallback?,
                  renegotiationSupport: NIORenegotiationSupport) {
-        
-//        NSLog("TLSConfiguration INIT cipherSuites: \(cipherSuites)")
-//        NSLog("TLSConfiguration INIT verifySignatureAlgorithms: \(verifySignatureAlgorithms)")
-//        NSLog("TLSConfiguration INIT verifySignatureAlgorithms: \(verifySignatureAlgorithms)")
         self.cipherSuites = cipherSuites
         self.verifySignatureAlgorithms = verifySignatureAlgorithms
         self.signingSignatureAlgorithms = signingSignatureAlgorithms
@@ -243,9 +239,6 @@ public struct TLSConfiguration {
         self.renegotiationSupport = renegotiationSupport
         self.applicationProtocols = applicationProtocols
         self.keyLogCallback = keyLogCallback
-        
-//        NSLog("TLSConfiguration INIT: \(self)")
-
     }
 
     /// Create a TLS configuration for use with server-side contexts.
