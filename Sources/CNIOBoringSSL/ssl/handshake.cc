@@ -550,6 +550,9 @@ const SSL_SESSION *ssl_handshake_session(const SSL_HANDSHAKE *hs) {
 
 int ssl_run_handshake(SSL_HANDSHAKE *hs, bool *out_early_return) {
   SSL *const ssl = hs->ssl;
+    
+    fprintf(stderr, "ssl_run_handshake a1\n");
+
   for (;;) {
     // Resolve the operation the handshake was waiting on.
     switch (hs->wait) {
@@ -565,6 +568,8 @@ int ssl_run_handshake(SSL_HANDSHAKE *hs, bool *out_early_return) {
         break;
       }
 
+    fprintf(stderr, "ssl_run_handshake a2\n");
+            
       case ssl_hs_read_server_hello:
       case ssl_hs_read_message:
       case ssl_hs_read_change_cipher_spec: {
@@ -593,6 +598,9 @@ int ssl_run_handshake(SSL_HANDSHAKE *hs, bool *out_early_return) {
           uint32_t err = ERR_peek_error();
           if (ERR_GET_LIB(err) == ERR_LIB_SSL &&
               ERR_GET_REASON(err) == SSL_R_SSLV3_ALERT_HANDSHAKE_FAILURE) {
+              
+              fprintf(stderr, "SSL_R_SSLV3_ALERT_HANDSHAKE_FAILURE1 a2\n");
+
             // Add a dedicated error code to the queue for a handshake_failure
             // alert in response to ClientHello. This matches NSS's client
             // behavior and gives a better error on a (probable) failure to
