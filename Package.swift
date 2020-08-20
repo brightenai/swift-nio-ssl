@@ -29,8 +29,10 @@ let package = Package(
     products: [
         .library(name: "NIOSSL", targets: ["NIOSSL"]),
     ],
+    
     dependencies: [
         .package(name:"swift-nio", url: "https://github.com/brightenai/swift-nio.git", .branch("master")),//from: "2.15.0"),
+        .package(name:"swift-log",url: "https://github.com/brightenai/swift-log.git",  .branch("master")),
     ],
     targets: [
         .target(name: "CNIOBoringSSL",
@@ -43,6 +45,7 @@ let package = Package(
         .target(name: "NIOSSL",
                 dependencies: [.product(name: "NIO", package: "swift-nio"),
                                .product(name: "NIOConcurrencyHelpers", package: "swift-nio"), "CNIOBoringSSL", "CNIOBoringSSLShims",
+                               .product(name: "Logging", package: "swift-log"),
                                .product(name: "NIOTLS", package: "swift-nio")],
                 linkerSettings: [
                                 .unsafeFlags([ "-Xlinker","-soname=libNIOSSL.so"],.when(platforms: [.android])),
