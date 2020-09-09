@@ -551,7 +551,7 @@ const SSL_SESSION *ssl_handshake_session(const SSL_HANDSHAKE *hs) {
 int ssl_run_handshake(SSL_HANDSHAKE *hs, bool *out_early_return) {
   SSL *const ssl = hs->ssl;
     
-    fprintf(stderr, "ssl_run_handshake a1\n");
+//    fprintf(stderr, "ssl_run_handshake a1\n");
 
   for (;;) {
     // Resolve the operation the handshake was waiting on.
