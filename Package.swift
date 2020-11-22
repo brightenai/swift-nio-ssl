@@ -39,6 +39,13 @@ let package = Package(
                 exclude:[
                     "include/boringssl_prefix_symbols_nasm.inc",
                     "hash.txt"
+                ],
+                cSettings: [
+                .unsafeFlags(
+                 [
+                 "-I",
+                 "/usr/local/brightenPlat"
+                 ],.when(platforms: [.android]))
                 ]
         ),
         .target(name: "CNIOBoringSSLShims", dependencies: ["CNIOBoringSSL"]),
