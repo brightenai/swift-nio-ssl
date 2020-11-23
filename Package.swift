@@ -53,7 +53,7 @@ let package = Package(
                 dependencies: [.product(name: "NIO", package: "swift-nio"),
                                .product(name: "NIOConcurrencyHelpers", package: "swift-nio"), "CNIOBoringSSL", "CNIOBoringSSLShims",
                                .product(name: "Logging", package: "swift-log"),
-                               .product(name: "NIOTLS", package: "swift-nio")],
+                               .product(name: "NIOTLS", package: "swift-nio")]
 //                linkerSettings: [
 //                                .unsafeFlags([ "-Xlinker","-soname=libNIOSSL.so"],.when(platforms: [.android])),
 //                                 ]
