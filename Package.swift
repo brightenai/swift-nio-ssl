@@ -54,9 +54,9 @@ let package = Package(
                                .product(name: "NIOConcurrencyHelpers", package: "swift-nio"), "CNIOBoringSSL", "CNIOBoringSSLShims",
                                .product(name: "Logging", package: "swift-log"),
                                .product(name: "NIOTLS", package: "swift-nio")],
-                linkerSettings: [
-                                .unsafeFlags([ "-Xlinker","-soname=libNIOSSL.so"],.when(platforms: [.android])),
-                                 ]
+//                linkerSettings: [
+//                                .unsafeFlags([ "-Xlinker","-soname=libNIOSSL.so"],.when(platforms: [.android])),
+//                                 ]
 
         )
 //        .target(name: "NIOTLSServer", dependencies: ["NIO", "NIOSSL", "NIOConcurrencyHelpers"]),
